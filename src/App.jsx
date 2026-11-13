@@ -9,7 +9,7 @@ const productos = [
     categorias: ["Otros"],
     precio: 0,
     descripcion: "¿Quieres imprimir algo y tienes el archivo? ¡Mándamelo y lo cotizo!",
-    imagen: "/public/hikari-logo.jpeg",
+    imagen: "/hikari-logo.jpeg",
     },
   {
     id: 1,
