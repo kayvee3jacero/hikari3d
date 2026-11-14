@@ -1,6 +1,5 @@
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 const productos = [
      {
@@ -1274,6 +1273,26 @@ function App() {
   const [busqueda, setBusqueda] = useState("");
   const [imagenAmpliada, setImagenAmpliada] = useState(null);
   const [indiceImagen, setIndiceImagen] = useState(0);
+  const [mostrarSubir, setMostrarSubir] = useState(false);
+
+  useEffect(() => {
+    const controlarScroll = () => {
+      setMostrarSubir(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", controlarScroll);
+
+    return () => {
+      window.removeEventListener("scroll", controlarScroll);
+    };
+  }, []);
+
+  const subirAlInicio = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
 const productosFiltrados = productos.filter((producto) => {
   const categoriasProducto =
@@ -1549,6 +1568,17 @@ const cambiarImagen = (direccion) => {
     <p>{imagenAmpliada.nombre}</p>
   </div>
 )}
+
+      {mostrarSubir && (
+        <button
+          className="boton-subir"
+          onClick={subirAlInicio}
+          aria-label="Volver al inicio"
+          title="Volver arriba"
+        >
+          ↑
+        </button>
+      )}
 
       <footer>
         <p>© 2026 Hikari 3D · Todos los derechos reservados.</p>

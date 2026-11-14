@@ -560,3 +560,37 @@ footer {
   position: relative;
   top: -16px;
 }
+
+.boton-subir {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e879f9;
+  border-radius: 50%;
+  background: #24132f;
+  color: #f0abfc;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 0 15px rgba(232, 121, 249, 0.4);
+  transition: all 0.3s ease;
+}
+
+.boton-subir:hover {
+  background: #d946ef;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(232, 121, 249, 0.7);
+}
+
+@media (max-width: 600px) {
+  .boton-subir {
+    bottom: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+  }
+}
