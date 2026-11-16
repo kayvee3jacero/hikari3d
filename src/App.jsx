@@ -1281,13 +1281,14 @@ const banners = [
     boton: "Explorar accesorios",
     destino: "#catalogo"
   },
-  {
+    {
     imagen: "/banners/banner3.jpeg",
     titulo: "Tus ideas, en 3D",
     descripcion: "¿Tienes un proyecto? Nosotros lo hacemos realidad.",
     boton: "Cotizar proyecto",
     destino: "#contacto"
   }
+  
 ];
 
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
