@@ -82,7 +82,7 @@ const productos = [
     id: 9,
     nombre: "Set Aros y llavero Baby Metal",
     categorias: ["Geek", "Accesorios"],
-    precio: 3000,
+    precio: 5000,
     descripcion: "Aros y llavero de Baby Metal",
     imagen: "/Aros/setaros1.jpg"
   },
@@ -90,7 +90,7 @@ const productos = [
     id: 10,
     nombre: "Set Aros y llavero de One piece",
     categorias: ["Geek", "Accesorios"],
-    precio: 3000,
+    precio: 5000,
     descripcion: "Aros y llavero de One piece",
     imagen: "/Aros/setaros2.jpg"
   },
@@ -98,7 +98,7 @@ const productos = [
     id: 11,
     nombre: "Set Aros y llavero de Sombrero de Luffy",
     categorias: ["Geek", "Accesorios"],
-    precio: 3000,
+    precio: 5000,
     descripcion: "Aros y llavero de One piece",
     imagen: "/Aros/setaros3.jpg"
   },
@@ -484,7 +484,7 @@ const productos = [
     id: 55,
     nombre: "Portalentes Pikachu",
     categorias: ["Geek", "Funcional", "Decoración"],
-    precio: 5000,
+    precio: 6000,
     descripcion: "Portalentes Pikachu",
     imagen: "/Otros/otro6.jpg"
   },
@@ -712,7 +712,7 @@ const productos = [
     id: 79,
     nombre: "Varita mágica pulpo giratorio",
     categorias: ["Funcional","Juguetes","Otros"],
-    precio: 5000,
+    precio: 8000,
     descripcion: "Varita mágica con pulpo giratorio, Disponible en distintos colores, consultar",
     imagen: "/Otros/otro33.jpg",
     imagenes: [
@@ -835,7 +835,7 @@ const productos = [
     id: 90,
     nombre: "Figura Cuervo sobre calavera",
     categorias: ["Geek","Figuras"],
-    precio: 8000,
+    precio: 15000,
     descripcion: "Figura de Cuervo sobre calavera, grande",
     imagen: "/Figuras grandes/figura3.jpg",
     imagenes: [
@@ -1218,7 +1218,7 @@ const productos = [
     categorias: ["Geek","Funcional", "Otros"],
     precio: 4000,
     descripcion: "Marcapáginas Tairn y Aadarna, Alas de Sangre",
-    imagen: "/Figuras mini/figu21.jpg",
+    imagen: "/Marcapaginas/marca3.jpg",
     imagenes: [
       "/Marcapaginas/marca3.jpg",
       "/Marcapaginas/marca3-2.jpg",
@@ -1229,7 +1229,7 @@ const productos = [
     id: 126,
     nombre: "Marcapáginas Harry Potter",
     categorias: ["Geek","Otros"],
-    precio: 2000,
+    precio: 3000,
     descripcion: "Marcapáginas Harry Potter, Disponible en distintos colores, consultar",
     imagen: "/Marcapaginas/marca4.jpg",
     },
@@ -1241,9 +1241,6 @@ const productos = [
     descripcion: "Figura Cubo de compañía Portal",
     imagen: "/Figuras grandes/figura13.jpeg",
     },
-
-   
- 
 
 
 ];
@@ -1269,11 +1266,47 @@ const formatoPrecio = (precio) =>
 
 function App() {
   
+const banners = [
+  {
+    imagen: "/banners/banner1.jpg",
+    titulo: "Figuras que cobran vida",
+    descripcion: "Tus personajes favoritos impresos en 3D.",
+    boton: "Ver figuras",
+    destino: "#catalogo"
+  },
+  {
+    imagen: "/banners/banner2.jpg",
+    titulo: "Accesorios con personalidad",
+    descripcion: "Llaveros, aros y accesorios únicos.",
+    boton: "Explorar accesorios",
+    destino: "#catalogo"
+  },
+  {
+    imagen: "/banners/banner3.jpeg",
+    titulo: "Tus ideas, en 3D",
+    descripcion: "¿Tienes un proyecto? Nosotros lo hacemos realidad.",
+    boton: "Cotizar proyecto",
+    destino: "#contacto"
+  }
+];
+
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [imagenAmpliada, setImagenAmpliada] = useState(null);
   const [indiceImagen, setIndiceImagen] = useState(0);
   const [mostrarSubir, setMostrarSubir] = useState(false);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const [bannerActual, setBannerActual] = useState(0);
+
+  useEffect(() => {
+  const intervalo = setInterval(() => {
+    setBannerActual((actual) =>
+      (actual + 1) % banners.length
+    );
+  }, 5000);
+
+  return () => clearInterval(intervalo);
+}, []);
 
   useEffect(() => {
     const controlarScroll = () => {
@@ -1309,6 +1342,19 @@ const productosFiltrados = productos.filter((producto) => {
   return coincideCategoria && coincideBusqueda;
 });
 
+const productosPorPagina = 9;
+
+const totalPaginas = Math.ceil(
+  productosFiltrados.length / productosPorPagina
+);
+
+const indiceInicio = (paginaActual - 1) * productosPorPagina;
+
+const productosPagina = productosFiltrados.slice(
+  indiceInicio,
+  indiceInicio + productosPorPagina
+);
+
 const cambiarImagen = (direccion) => {
   if (!imagenAmpliada) return;
 
@@ -1343,32 +1389,89 @@ const cambiarImagen = (direccion) => {
       </header>
 
       <main>
-        <section className="hero" id="inicio">
+        <section className="hero-carousel" id="inicio">
 
-  <img
-    src="/hikari-logo.jpeg"
-    alt="Hikari 3D"
-    className="hero-background-logo"
-  />
+  <div
+    className="hero-slide"
+    style={{
+      backgroundImage: `
+        linear-gradient(
+          90deg,
+          rgba(15, 5, 25, 0.95),
+          rgba(15, 5, 25, 0.2)
+        ),
+        url("${banners[bannerActual].imagen}")
+      `
+    }}
+  >
 
-  <p className="eyebrow">IMPRESIÓN 3D · HIKARI 3D</p>
+    <div className="hero-content">
 
-  <h1>
-    Pequeñas ideas,
-    <br />
-    <span>grandes creaciones.</span>
-  </h1>
+      <p className="eyebrow">
+        IMPRESIÓN 3D · HIKARI 3D
+      </p>
 
-  <p className="hero-description">
-    Descubre accesorios, decoración y productos
-    inspirados en el mundo geek y la vida cotidiana.
-  </p>
+      <h1>
+        {banners[bannerActual].titulo}
+      </h1>
 
-  <a className="main-button" href="#catalogo">
-    Explorar catálogo
-  </a>
+      <p className="hero-description">
+        {banners[bannerActual].descripcion}
+      </p>
+
+      <a
+        className="main-button"
+        href={banners[bannerActual].destino}
+      >
+        {banners[bannerActual].boton}
+      </a>
+
+    </div>
+
+    <button
+      className="banner-arrow prev"
+      onClick={() =>
+        setBannerActual(
+          (bannerActual - 1 + banners.length) % banners.length
+        )
+      }
+      aria-label="Banner anterior"
+    >
+      ❮
+    </button>
+
+    <button
+      className="banner-arrow next"
+      onClick={() =>
+        setBannerActual(
+          (bannerActual + 1) % banners.length
+        )
+      }
+      aria-label="Banner siguiente"
+    >
+      ❯
+    </button>
+
+    <div className="banner-indicators">
+      {banners.map((banner, index) => (
+        <button
+          key={index}
+          className={
+            bannerActual === index
+              ? "banner-dot active"
+              : "banner-dot"
+          }
+          onClick={() => setBannerActual(index)}
+          aria-label={`Ir al banner ${index + 1}`}
+        />
+      ))}
+    </div>
+
+  </div>
 
 </section>
+
+
 
         <section className="catalog" id="catalogo">
           <p className="eyebrow">DESCUBRE HIKARI 3D</p>
@@ -1380,7 +1483,10 @@ const cambiarImagen = (direccion) => {
             type="search"
             placeholder="Buscar productos..."
             value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
+            onChange={(e) => {
+  setBusqueda(e.target.value);
+  setPaginaActual(1);
+}}
           />
 
           <div className="category-filters">
@@ -1392,7 +1498,10 @@ const cambiarImagen = (direccion) => {
                     ? "filter-button active"
                     : "filter-button"
                 }
-                onClick={() => setCategoriaActiva(categoria)}
+                onClick={() => {
+  setCategoriaActiva(categoria);
+  setPaginaActual(1);
+}}
               >
                 {categoria}
               </button>
@@ -1400,7 +1509,7 @@ const cambiarImagen = (direccion) => {
           </div>
 
           <div className="product-grid">
-  {productosFiltrados.map((producto) => (
+  {productosPagina.map((producto) => (
     <article className="product-card" key={producto.id}>
       <img
         className="product-photo"
@@ -1411,6 +1520,8 @@ const cambiarImagen = (direccion) => {
   setImagenAmpliada(producto);
   setIndiceImagen(0);
 }}
+
+
       />
 
                 <div className="product-categories">
@@ -1444,6 +1555,32 @@ const cambiarImagen = (direccion) => {
               </article>
             ))}
           </div>
+
+          {totalPaginas > 1 && (
+  <div className="paginacion">
+
+    <button
+      className="pagina-boton"
+      disabled={paginaActual === 1}
+      onClick={() => setPaginaActual(paginaActual - 1)}
+    >
+      ❮ Anterior
+    </button>
+
+    <span className="pagina-info">
+      Página {paginaActual} de {totalPaginas}
+    </span>
+
+    <button
+      className="pagina-boton"
+      disabled={paginaActual === totalPaginas}
+      onClick={() => setPaginaActual(paginaActual + 1)}
+    >
+      Siguiente ❯
+    </button>
+
+  </div>
+)}
 
           {productosFiltrados.length === 0 && (
             <div className="empty-catalog">
